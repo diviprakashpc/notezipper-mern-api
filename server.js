@@ -2,10 +2,13 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const path = require("path");
-
+const cors = require('cors');
+const http = require('http')
 const userRoutes = require("./routes/userRoutes");
 const noteRoutes = require("./routes/noteRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddlewares");
+
+
 
 dotenv.config();
 
@@ -15,8 +18,15 @@ const app = express();
 
 app.use(express.json());
 
+app.use(cors());
+
 app.use("/api/users", userRoutes);
 app.use("/api/notes", noteRoutes);
+
+
+
+
+
 
 // ===========DEPLOYMENT=================
   __dirname = path.resolve();
@@ -31,7 +41,9 @@ app.use("/api/notes", noteRoutes);
 
 app.use(notFound);
 app.use(errorHandler); // with this we get error in more structured format.
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 5001;
+
+const server = http.createServer(app)
+server.listen(PORT, () => {
   console.log(`Server started in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
