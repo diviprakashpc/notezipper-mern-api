@@ -18,6 +18,16 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/notes", noteRoutes);
 
+// ===========DEPLOYMENT=================
+  __dirname = path.resolve();
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+
+
+//* means all paths other than our path that we have created i.e. managerroutes, userroutes etc..//
+
+// ===========DEPLOYMENT=================
 
 app.use(notFound);
 app.use(errorHandler); // with this we get error in more structured format.
